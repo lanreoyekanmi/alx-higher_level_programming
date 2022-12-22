@@ -1,43 +1,39 @@
 #!/usr/bin/python3
 
+""" takes in an argument
+
+    and displays all values
+
+    in the states table of
+
+    hbtn_0e_0_usa where name matches the argument
+
+     Usage: ./2-my_filter_states.py <mysql username>
+
+                                    <mysql password>
+
+                                    <database name>
+
+                                    <state name searched>
+
 """
-
-0-select_states: lists all states in database table
-
-"""
-
-
-
-
-
-import MySQLdb
 
 import sys
+
+import MySQLdb
 
 
 
 if __name__ == "__main__":
 
-    db = MySQLdb.connect(
+    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
 
-      host="localhost",
+    c = db.cursor()
 
-      user=sys.argv[1],
+    c.execute("""SELECT * FROM states
 
-      passwd=sys.argv[2],
+                WHERE name LIKE BINARY '{}'
 
-      database=sys.argv[3],
+                ORDER BY states.id ASC""".format(sys.argv[4]).strip("'"))
 
-      port=3306)
-
-    cur = db.cursor()
-
-    cur.execute("SELECT * FROM states ORDER BY id")
-
-    results = cur.fetchall()
-
-    for result in results:
-
-        print(result)
-
-    cur.close()
+    [print(state) for state in c.fetchall()]
