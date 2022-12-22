@@ -1,61 +1,39 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
-""" script that lists all states from the database hbtn_0e_0_usa
-"""
-
-
-if __name__ == '__main__':
-
-    import MySQLdb
-
-    from sys import argv
-
-    db = MySQLdb.connect(host='localhost',
-
-                         user=argv[1], passwd=argv[2], db=argv[3])
-
-    cur = db.cursor()
-
-    cur.execute('SELECT * FROM states ORDER BY id')
-
-    rows = cur.fetchall()
-
-    for row in rows:
-
-        print(row)
-
-    cur.close()
-
-    db.close()
-=======
-
-""" script that lists all states from the database hbtn_0e_0_usa
 
 """
+
+Lists all states from the database hbtn_0e_0_usa
+
+"""
+
+import sys
+
+import MySQLdb
 
 
 
 if __name__ == '__main__':
 
-        import MySQLdb
+    db = MySQLdb.connect(
 
-            from sys import argv
+        user=sys.argv[1],
 
-                db = MySQLdb.connect(host='localhost',
+        passwd=sys.argv[2],
 
-                                                 user=argv[1], passwd=argv[2], db=argv[3])
+        db=sys.argv[3],
 
-                    cur = db.cursor()
+        port=3306,
 
-                        cur.execute('SELECT * FROM states ORDER BY id')
+        host='localhost')
 
-                            rows = cur.fetchall()
+    cursor = db.cursor()
 
-                                for row in rows:
+    cursor.execute('SELECT * FROM states ORDER BY states.id ASC;')
 
-                                            print(row)
 
-                                                cur.close()
 
-                                                    db.close()
->>>>>>> 41a6fbe59689b51bc489d7dc91910c9358e3bbd5
+    states = cursor.fetchall()
+
+    for state in states:
+
+        print(state)
